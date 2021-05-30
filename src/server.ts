@@ -1,7 +1,7 @@
 import { app } from "./app";
 import { dbConnection } from "./data/dbConnection";
 
-const sincronizar = async () => {
+const dbSync = async () => {
   try {
     const result = await dbConnection.sync();
     console.log("Sync" + result);
@@ -10,6 +10,6 @@ const sincronizar = async () => {
   }
 };
 
-sincronizar();
+dbSync();
 
 app.listen(3000);

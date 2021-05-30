@@ -41,8 +41,7 @@ router.post(
     }
     const clientRep = new ClientRepository();
     clientRep.insert(req.body).then();
-    res.status(200).send(`created client.`);
-    return;
+    res.status(201).send(`created client.`);
   }
 );
 
@@ -97,7 +96,7 @@ router.post(
     const addressRep = new AddressRepository();
     const cnpj = req.params.cnpj;
     addressRep.insert(req.body, cnpj);
-    res.status(200).send(`created client.`);
+    res.status(201).send(`created client.`);
   }
 );
 
