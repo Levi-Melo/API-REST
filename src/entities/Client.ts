@@ -1,4 +1,5 @@
 import { Address } from "./Address";
+
 export class Client {
   public readonly createdAt?: Date;
   public readonly updatedAt?: Date;

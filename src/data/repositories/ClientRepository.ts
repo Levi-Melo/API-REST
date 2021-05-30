@@ -24,8 +24,9 @@ export class ClientRepository implements IClientRepository {
     });
 
     for (let i = 0; i < clients.length; i++) {
-      const addressesData = await addressRep.findAddressByCnpj(clients[0].cnpj);
-      clients[0] = { ...clients[0], addresses: addressesData };
+      const addressesData = await addressRep.findAddressByCnpj(clients[i].cnpj);
+      clients[i] = { ...clients[i], addresses: addressesData };
+      console.log(addressesData);
     }
     return clients;
   }
@@ -79,11 +80,9 @@ export class ClientRepository implements IClientRepository {
     };
     const client = new Client(clientData);
 
-    const createdClient = await ClientModel.create(client);
-    if (createdClient.getDataValue("cnpj")) {
-      return true;
-    }
-    return false;
+    await ClientModel.create(client);
+
+    return client;
   }
 
   async update(cnpj: string, data: Client) {
