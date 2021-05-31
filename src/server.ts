@@ -3,7 +3,7 @@ import { dbConnection } from "./data/dbConnection";
 
 const dbSync = async () => {
   try {
-    const result = await dbConnection.sync();
+    await dbConnection.sync();
   } catch (error) {
     console.log(error);
   }

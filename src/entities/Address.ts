@@ -13,11 +13,7 @@ export class Address {
   public cep: string;
   public clientId: string;
 
-  constructor(
-    props: Omit<Address, "id" | "createdAt">,
-    id?: string,
-    createdAt?: Date
-  ) {
+  constructor(props: Omit<Address, "id" | "createdAt">, id?: string) {
     Object.assign(this, props);
 
     if (!id) {

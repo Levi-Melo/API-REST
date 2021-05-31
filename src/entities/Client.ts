@@ -18,7 +18,7 @@ export class Client {
   ) {
     Object.assign(this, props);
 
-    if (createdAt) {
+    if (!createdAt) {
       this.createdAt = new Date();
     }
   }
