@@ -8,8 +8,9 @@ import { isValidCep } from "./controllers/cepValidator";
 export const router = Router();
 
 router.get("/clients", async (req, res) => {
+  // #swagger.tags = ['Clients']
+  // #swagger.description = 'Endpoint to get all Clients.'
   const clientRep = new ClientRepository();
-
   try {
     const allClients = await clientRep.findAll();
     res.status(200).send(allClients);
@@ -19,6 +20,9 @@ router.get("/clients", async (req, res) => {
 });
 
 router.get("/clients/:cnpj", async (req, res) => {
+  // #swagger.tags = ['Clients']
+  // #swagger.description = 'Endpoint to get one Client by cnpj.'
+
   const cnpj = req.params.cnpj;
   const clientRep = new ClientRepository();
   try {
@@ -35,6 +39,8 @@ router.post(
   body("telephone").trim().isMobilePhone("pt-BR"),
   body("cnpj").custom(isValidCnpj),
   (req, res) => {
+    // #swagger.tags = ['Clients']
+    // #swagger.description = 'Endpoint to register one Client.'
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -52,6 +58,8 @@ router.patch(
   body("cnpj").optional().trim().custom(isValidCnpj),
   param("cnpj").custom(isValidCnpj),
   async (req, res) => {
+    // #swagger.tags = ['Clients']
+    // #swagger.description = 'Endpoint to update any data of one Client.'
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -67,6 +75,8 @@ router.delete(
   "/clients/:cnpj",
   param("cnpj").trim().custom(isValidCnpj),
   (req, res) => {
+    // #swagger.tags = ['Clients']
+    // #swagger.description = 'Endpoint to delete one Client by cnpj.'
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -89,6 +99,8 @@ router.post(
   param("cnpj").trim().custom(isValidCnpj),
 
   (req, res) => {
+    // #swagger.tags = ['Addresses']
+    // #swagger.description = 'Endpoint to register one  Address linked to one client by cnpj.'
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -108,8 +120,10 @@ router.patch(
   body("city").optional().trim(),
   body("state").optional().trim(),
   body("cep").optional().trim().custom(isValidCep),
-  param("cnpj").trim().custom(isValidCnpj),
+  param("id").isUUID(),
   async (req, res) => {
+    // #swagger.tags = ['Addresses']
+    // #swagger.description = 'Endpoint to update any data of one Address by id.'
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -122,6 +136,8 @@ router.patch(
 );
 
 router.delete("/clients/address/:id", param("id").isUUID(), (req, res) => {
+  // #swagger.tags = ['Addresses']
+  // #swagger.description = 'Endpoint to delete one Address by id.'
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -130,4 +146,10 @@ router.delete("/clients/address/:id", param("id").isUUID(), (req, res) => {
   const addressRep = new AddressRepository();
   addressRep.delete(id);
   res.status(200).send(`deleted Address.`);
+});
+
+router.get("/", (req, res) => {
+  // #swagger.tags = ['Documentation']
+  // #swagger.description = 'Endpoint to redirect to ocumentation.'
+  res.redirect("/doc");
 });

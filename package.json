@@ -1,16 +1,20 @@
 {
+  "type": "module",
   "name": "api-rest",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsnd --transpile-only --respawn --ignore-watch node_modules server.ts "
+    "start": "tsnd --transpile-only --respawn --ignore-watch node_modules ./src/swagger.ts "
   },
   "dependencies": {
+    "@types/swagger-ui-express": "^4.1.2",
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.2",
+    "swagger-autogen": "^2.9.1",
+    "swagger-ui-express": "^4.1.6",
     "uuidv4": "^6.2.8"
   },
   "devDependencies": {
