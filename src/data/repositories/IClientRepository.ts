@@ -6,5 +6,5 @@ export interface IClientRepository {
   findAll(): Promise<Client[]>;
   insert(client: Client): Promise<Client>;
   update(cnpj: string, client: Client): Promise<Client>;
-  delete(cnpj: string): Promise<boolean>;
+  delete(cnpj: string): Promise<void>;
 }

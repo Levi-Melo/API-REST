@@ -33,12 +33,10 @@ export class ClientRepository implements IClientRepository {
   }
 
   async findByCnpj(cnpj: string) {
-    cnpj.replace(/[^\d]+/g, "");
     const clientAddresses: Address[] = [];
 
     const foundClient = await ClientModel.findByPk(cnpj);
     const clientId = foundClient.getDataValue("cnpj");
-
     const addresses = await AddressModel.findAll({
       where: { clientId: clientId },
     });
@@ -80,15 +78,12 @@ export class ClientRepository implements IClientRepository {
       telephone: data.telephone,
     };
     const client = new Client(clientData);
-
     await ClientModel.create(client);
 
     return client;
   }
 
   async update(cnpj: string, data: Client) {
-    cnpj.replace(/[^\d]+/g, "");
-
     const newClientData = { ...data, updatedAt: new Date() };
 
     const foundClient = await ClientModel.findByPk(cnpj);
@@ -108,13 +103,8 @@ export class ClientRepository implements IClientRepository {
   }
 
   async delete(cnpj: string) {
-    cnpj.replace(/[^\d]+/g, "");
-    const deletedClientsNumber = await ClientModel.destroy({
+    await ClientModel.destroy({
       where: { cnpj: cnpj },
     });
-    if (deletedClientsNumber <= 0) {
-      return false;
-    }
-    return true;
   }
 }

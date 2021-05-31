@@ -48,10 +48,8 @@
     },
     "/clients/{cnpj}": {
       "get": {
-        "tags": [
-          "Clients"
-        ],
-        "description": "Endpoint to get one Client by cnpj.",
+        "tags": [],
+        "description": "",
         "parameters": [
           {
             "name": "cnpj",
@@ -66,6 +64,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -88,6 +89,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -110,6 +114,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -137,6 +144,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -161,6 +171,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -183,6 +196,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

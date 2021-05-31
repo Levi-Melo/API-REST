@@ -12,9 +12,9 @@ export class Client {
   public addresses?: Address[];
 
   constructor(
-    props: Omit<Client, "createdAt" | "address">,
+    props: Omit<Client, "createdAt" | "addresses">,
     createdAt?: Date,
-    address?: Address[]
+    addresses?: Address[]
   ) {
     Object.assign(this, props);
 
