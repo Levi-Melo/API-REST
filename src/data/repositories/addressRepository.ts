@@ -22,13 +22,12 @@ export class AddressRepository implements IAddressRepository {
     return new Address(address);
   }
 
-  async findAddressByCnpj(cnpj: string) {
-    cnpj.replace(/[^\d]+/g, "");
-    const clientAddresses: Address[] = [];
+  async findAddressByClientId(ClientId: string) {
+    ClientId.replace(/[^\d]+/g, "");
     const addresses = await AddressModel.findAll({
-      where: { clientId: cnpj },
+      where: { clientId: ClientId },
     });
-    addresses.forEach(async (rowAddresses) => {
+    const clientAddresses = addresses.map((rowAddresses) => {
       const address: Address = {
         id: rowAddresses.getDataValue("id"),
         createdAt: rowAddresses.getDataValue("createdAt"),
@@ -39,9 +38,9 @@ export class AddressRepository implements IAddressRepository {
         city: rowAddresses.getDataValue("city"),
         state: rowAddresses.getDataValue("state"),
         cep: rowAddresses.getDataValue("cep"),
-        clientId: rowAddresses.getDataValue("cnpj"),
+        clientId: rowAddresses.getDataValue("ClientId"),
       };
-      clientAddresses.push(address);
+      return address;
     });
     return clientAddresses;
   }
@@ -93,12 +92,8 @@ export class AddressRepository implements IAddressRepository {
   }
 
   async delete(id: string) {
-    const deletedAddressesNumber = await AddressModel.destroy({
+    await AddressModel.destroy({
       where: { id: id },
     });
-    if (deletedAddressesNumber <= 0) {
-      return false;
-    }
-    return true;
   }
 }

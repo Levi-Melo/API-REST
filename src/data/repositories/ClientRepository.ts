@@ -8,10 +8,9 @@ import { AddressRepository } from "./addressRepository";
 export class ClientRepository implements IClientRepository {
   async findAll() {
     const foundClients = await ClientModel.findAll();
-    const clients: Client[] = [];
     const addressRep = new AddressRepository();
 
-    foundClients.forEach(async (rowClient) => {
+    const clients = foundClients.map((rowClient) => {
       const client: Client = {
         createdAt: rowClient.getDataValue("createdAt"),
         updatedAt: rowClient.getDataValue("updatedAt"),
@@ -20,11 +19,13 @@ export class ClientRepository implements IClientRepository {
         contact: rowClient.getDataValue("contact"),
         telephone: rowClient.getDataValue("telephone"),
       };
-      clients.push(client);
+      return client;
     });
 
     for (let i = 0; i < clients.length; i++) {
-      const addressesData = await addressRep.findAddressByCnpj(clients[i].cnpj);
+      const addressesData = await addressRep.findAddressByClientId(
+        clients[i].cnpj
+      );
       if (addressesData.length != 0) {
         clients[i] = { ...clients[i], addresses: addressesData };
       }
@@ -33,14 +34,12 @@ export class ClientRepository implements IClientRepository {
   }
 
   async findByCnpj(cnpj: string) {
-    const clientAddresses: Address[] = [];
-
     const foundClient = await ClientModel.findByPk(cnpj);
     const clientId = foundClient.getDataValue("cnpj");
     const addresses = await AddressModel.findAll({
       where: { clientId: clientId },
     });
-    addresses.forEach((rowAddresses) => {
+    const clientAddresses = addresses.map((rowAddresses) => {
       const address: Address = {
         id: rowAddresses.getDataValue("id"),
         createdAt: rowAddresses.getDataValue("createdAt"),
@@ -53,7 +52,7 @@ export class ClientRepository implements IClientRepository {
         cep: rowAddresses.getDataValue("cep"),
         clientId: clientId,
       };
-      clientAddresses.push(address);
+      return address;
     });
 
     const client: Client = {
@@ -103,8 +102,12 @@ export class ClientRepository implements IClientRepository {
   }
 
   async delete(cnpj: string) {
-    await ClientModel.destroy({
-      where: { cnpj: cnpj },
+    AddressModel.destroy({
+      where: { clientId: cnpj },
+    }).then(() => {
+      ClientModel.destroy({
+        where: { cnpj: cnpj },
+      });
     });
   }
 }

@@ -48,8 +48,10 @@
     },
     "/clients/{cnpj}": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Clients"
+        ],
+        "description": "Endpoint to a Clients by cnpj.",
         "parameters": [
           {
             "name": "cnpj",
@@ -208,7 +210,7 @@
         "tags": [
           "Documentation"
         ],
-        "description": "Endpoint to redirect to ocumentation.",
+        "description": "Endpoint to redirect to documentation.",
         "parameters": [],
         "responses": {}
       }
