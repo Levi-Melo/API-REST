@@ -46,7 +46,7 @@
         }
       }
     },
-    "/clients/{cnpj}": {
+    "/clients/{clientId}": {
       "get": {
         "tags": [
           "Clients"
@@ -54,7 +54,7 @@
         "description": "Endpoint to a Clients by cnpj.",
         "parameters": [
           {
-            "name": "cnpj",
+            "name": "clientId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -79,7 +79,7 @@
         "description": "Endpoint to update any data of one Client.",
         "parameters": [
           {
-            "name": "cnpj",
+            "name": "clientId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -88,6 +88,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
@@ -104,7 +107,7 @@
         "description": "Endpoint to delete one Client by cnpj.",
         "parameters": [
           {
-            "name": "cnpj",
+            "name": "clientId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -123,7 +126,7 @@
         }
       }
     },
-    "/clients/{cnpj}/address": {
+    "/clients/{clientId}/address": {
       "post": {
         "tags": [
           "Addresses"
@@ -131,24 +134,18 @@
         "description": "Endpoint to register one Address linked to one client by cnpj.",
         "parameters": [
           {
-            "name": "cnpj",
+            "name": "clientId",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Created"
           },
           "400": {
             "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
           }
         }
       }
@@ -170,6 +167,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"

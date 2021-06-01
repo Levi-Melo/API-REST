@@ -1,6 +1,9 @@
 import swaggerAutogen from "swagger-autogen";
 const outputFile = "./swagger_output.json";
-const endpointsFiles = ["./src/routes.ts"];
+const endpointsFiles = [
+  "./src/controllers/clientEndpoints.ts",
+  "./src/controllers/addressEndpoints.ts",
+];
 
 const doc = {
   info: {
